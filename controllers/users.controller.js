@@ -18,7 +18,8 @@ const loginSchema = Joi.object({
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await userService.getUserById(id);
+    const user = await userService.getUserById(Number(id));
+    // const user = await userService.getUserById(req.body.id);
     res.status(200).json({ data: new UserResponse(user) });
   } catch (error) {
     if (error.message === "user not found") {
@@ -64,4 +65,17 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUserById, login };
+const getProfile = async (req, res) => {
+  try {
+    const { id } = req.user
+    const user = await userService.getUserById(Number(id));
+    // const user = await userService.getUserById(req.body.id);
+    res.status(200).json({ data: new UserResponse(user) });
+  } catch (error) {
+    if (error.message === "user not found") {
+      return res.status(404).json({ error: error.message });
+    }
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+};
+module.exports = { createUser, getUserById, login, getProfile };

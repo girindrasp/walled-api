@@ -5,10 +5,10 @@ const userController = require("../controllers/users.controller");
 const authenticateToken = require("../middlewares/auth.middleware");
 
 //add new user
-router.post("/users", userController.createUser);
+router.post("/register", userController.createUser);
 //get user by id
-router.get("/profile", authenticateToken, userController.getUserById);
+router.get("/profile", authenticateToken, userController.getProfile);
 //login
-router.post("/login", authenticateToken, userController.login)
+router.post("/login", userController.login)
 
 module.exports = router;
