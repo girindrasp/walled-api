@@ -19,7 +19,6 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await userService.getUserById(Number(id));
-    // const user = await userService.getUserById(req.body.id);
     res.status(200).json({ data: new UserResponse(user) });
   } catch (error) {
     if (error.message === "user not found") {
@@ -78,4 +77,18 @@ const getProfile = async (req, res) => {
     res.status(error.statusCode || 500).json({ error: error.message });
   }
 };
-module.exports = { createUser, getUserById, login, getProfile };
+
+const transfer = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const transactions = await userService.transfer(Number(id));
+    res.status(200).json({ data: transactions.rows });
+  } catch (error) {
+    if (error.message === "user not found") {
+      return res.status(404).json({ error: error.message });
+    }
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+}
+
+module.exports = { createUser, getUserById, login, getProfile, transfer };

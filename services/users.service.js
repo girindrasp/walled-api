@@ -44,4 +44,12 @@ const login = async (userData) => {
   return token;
 };
 
-module.exports = { createUser, getUserById, login };
+const transfer = async (id) => {
+  let user = await userRepository.transfer(id);
+  if (!user) {
+    throw new Error("user not found");
+  }
+  return user;
+};
+
+module.exports = { createUser, getUserById, login, transfer };

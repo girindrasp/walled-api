@@ -10,5 +10,7 @@ router.post("/register", userController.createUser);
 router.get("/profile", authenticateToken, userController.getProfile);
 //login
 router.post("/login", userController.login)
+//transfer
+router.get("/transfer", authenticateToken, userController.transfer)
 
 module.exports = router;
