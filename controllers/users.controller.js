@@ -68,7 +68,6 @@ const getProfile = async (req, res) => {
   try {
     const { id } = req.user
     const user = await userService.getUserById(Number(id));
-    // const user = await userService.getUserById(req.body.id);
     res.status(200).json({ data: new UserResponse(user) });
   } catch (error) {
     if (error.message === "user not found") {
